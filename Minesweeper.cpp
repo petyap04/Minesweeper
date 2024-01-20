@@ -12,7 +12,7 @@
 * Minesweeper
 *
 */
-
+#include <cstdlib> 
 #include <iostream>
 using namespace std;
 constexpr int MIN_SIZE = 3;
