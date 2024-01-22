@@ -110,9 +110,6 @@ char fromIndexToSymbol(unsigned int index) {
     if (index >= 0 && index <= 9) {
         return index + '0';
     }
-    /*if (index >= 10 && index <= 15){
-        return index + 'A' - 10;
-    }*/
     return '\0';
 }
 void putNumbersInCellsNextToMine(char fieldBackend[][MAX_SIZE], size_t size) {
@@ -175,10 +172,6 @@ void writeTheCommand(char* command, int& x, int& y, size_t size) {
     y--;
 }
 void openAllCellsWithZerosAround(char fieldFrontend[][MAX_SIZE], const char fieldBackend[][MAX_SIZE], size_t size, int x, int y, unsigned int& numberOfCellsToBeOpen) {
-    /*if (fieldFrontend[x][y] == ' '){
-        fieldFrontend[x][y] = fieldBackend[x][y];
-        numberOfCellsToBeOpen--;
-    }*/
     for (int i = x - 1; i <= x + 1; i++) {
         if (i >= 0 && i < size) {
             for (int j = y - 1; j <= y + 1; j++) {
