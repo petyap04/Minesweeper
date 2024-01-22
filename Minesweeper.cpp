@@ -261,14 +261,13 @@ void takeAction(char fieldFrontend[][MAX_SIZE], const char fieldBackend[][MAX_SI
         unmarkCell(fieldFrontend, fieldBackend, size, x, y, minesMarked);
     }
 }
-bool playTheGame(char fieldFrontend[][MAX_SIZE], const char fieldBackend[][MAX_SIZE], size_t size, bool& theGameIsNotOver, unsigned int numberOfMines, unsigned int& numberOfCellsToBeOpen) {
+bool playTheGame(char fieldFrontend[][MAX_SIZE], const char fieldBackend[][MAX_SIZE], size_t size, bool& theGameIsNotOver, unsigned int numberOfMines, unsigned int& numberOfCellsToBeOpen, unsigned int& minesMarked) {
     if (!fieldFrontend || !fieldBackend) {
         return 0;
     }
     char command[MAX_SIZE_OF_COMMAND];
     int xCoordinate, yCoordinate;
     writeTheCommand(command, xCoordinate, yCoordinate, size);
-    unsigned int minesMarked = 0;
     takeAction(fieldFrontend, fieldBackend, size, command, xCoordinate, yCoordinate, theGameIsNotOver, minesMarked, numberOfCellsToBeOpen);
     if (minesMarked == numberOfMines || numberOfCellsToBeOpen == 0) {
         return 1;
@@ -284,16 +283,17 @@ int main()
     unsigned int numberOfMines;
     setTheNumberOfMines(numberOfMines, size);
     char fieldBackend[MAX_SIZE][MAX_SIZE];
-    putTheMinesOnRandomPossitions(fieldBackend, size, numberOfMines);
-    unsigned int numberOfCellsToBeOpen = (size * size) - numberOfMines;
-    bool theGameIsNotOver = true;
     char fieldFrontend[MAX_SIZE][MAX_SIZE];
+    putTheMinesOnRandomPossitions(fieldBackend, size, numberOfMines);
     putNumbersInCellsNextToMine(fieldBackend, size);
     fillFieldFrontendWithSpace(fieldFrontend, size);
-    bool hasWon = 0;
+    unsigned int numberOfCellsToBeOpen = (size * size) - numberOfMines;
+    bool theGameIsNotOver = true;
+    bool hasWon = false;
+    unsigned int minesMarked = 0;
     printTheField(fieldFrontend, size);
     while (theGameIsNotOver && !hasWon) {
-        hasWon = playTheGame(fieldFrontend, fieldBackend, size, theGameIsNotOver, numberOfMines, numberOfCellsToBeOpen);
+        hasWon = playTheGame(fieldFrontend, fieldBackend, size, theGameIsNotOver, numberOfMines, numberOfCellsToBeOpen, minesMarked);
         printTheField(fieldFrontend, size);
     }
     if (theGameIsNotOver == false) {
